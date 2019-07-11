@@ -31,6 +31,10 @@ class Instructor extends Person {
   grade(student, subject) {
     console.log(`${student.name} receives a perfect score on ${subject}.`)
   }
+
+  tallyScore(score) {
+    return score + (Math.random() * 100) 
+  }
 }
 
 const keiran = new Instructor({
@@ -42,7 +46,7 @@ const keiran = new Instructor({
   catchPhrase: 'Once you go to sleep and wake up, it will all make sense.'
 });
 
-keiran.demo(keiran.specialty);
+// keiran.demo(keiran.specialty);
 
 const martha = new Instructor({
   name: 'Martha',
@@ -53,7 +57,7 @@ const martha = new Instructor({
   catchPhrase: 'Code first, ask questions later.'
 });
 
-martha.speak();
+// martha.speak();
 
 const josh = new Instructor({
   name: 'Josh',
@@ -72,19 +76,29 @@ class Student extends Person {
     super(props);
     this.previousBackground = props.previousBackground,
     this.className = props.className,
-    this.favSubjects = props.favSubjects
+    this.favSubjects = props.favSubjects,
+    this.grade = props.grade
   }
 
   listsSubjects() {
     this.favSubjects.map(subject => console.log(subject))
   }
-  
+
   PRAssignment(subject) {
     console.log(`${this.name} has submitted a PR for ${subject}.`)
   }
 
   sprintChallenge(subject) {
     console.log(`${this.name} has begun sprint challenge on ${subject}.`)
+  }
+
+  graduate(grade) {
+    if(grade >= 70) {
+      console.log(`${this.name} is ready to graduate!`)
+    } else {
+      console.log(`${this.name} needs more practice with the material`);
+      // tallyScore(Math.floor(Math.random() * 100))
+    }
   }
 }
 
@@ -94,13 +108,16 @@ const clif = new Student({
   location: 'Austin, TX',
   previousBackground: 'Designer',
   className: 'WEBPT8',
-  favSubjects: ['CSS', 'JavaScript', 'React', 'Responsive Web Design']
+  favSubjects: ['CSS', 'JavaScript', 'React', 'Responsive Web Design'],
+  grade: Math.floor(Math.random() * 100)
 })
 
-clif.speak();
-clif.listsSubjects();
+console.log(clif.graduate());
+console.log(clif.grade);
+// clif.speak();
+// clif.listsSubjects();
 
-josh.grade(clif, clif.favSubjects[2]); //wishful thinking 😅
+// josh.grade(clif, clif.favSubjects[2]); //wishful thinking 😅
 
 const nick = new Student({
   name: 'Nick',
@@ -111,7 +128,7 @@ const nick = new Student({
   favSubjects: ['JavaScript', 'React', 'MongoDB']
 })
 
-nick.sprintChallenge(nick.favSubjects[0]);
+// nick.sprintChallenge(nick.favSubjects[0]);
 
 //TEAMLEAD class extends INSTRUCTOR
 
@@ -142,7 +159,7 @@ const angelo = new TeamLead({
   favInstructor: 'Josh Knell'
 })
 
-angelo.standUp('#webpt8_angelo');
+// angelo.standUp('#webpt8_angelo');
 
 const derrick = new TeamLead({
   name: 'Keiran',
@@ -155,4 +172,4 @@ const derrick = new TeamLead({
   favInstructor: 'Keiran Koslowski'
 })
 
-derrick.debugsCode(nick, derrick.specialty);
+// derrick.debugsCode(nick, derrick.specialty);
