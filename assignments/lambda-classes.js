@@ -1,5 +1,7 @@
 // CODE here for your Lambda Classes
 
+
+//PERSON 'base-class'
 class Person {
   constructor(props) {
     this.name = props.name,
@@ -8,9 +10,11 @@ class Person {
   }
 
   speak() {
-    return `Hello my name is ${this.name}, I am from ${this.location}.`
+    console.log(`Hello my name is ${this.name}, I am from ${this.location}.`)
   }
 }
+
+//INSTRUCTOR class extends PERSON
 
 class Instructor extends Person {
   constructor(props) {
@@ -21,14 +25,48 @@ class Instructor extends Person {
   }
 
   demo(subject) {
-    console.log(`Today we are learning about ${this.subject}.`)
+    console.log(`Today we are learning about ${subject}.`)
   }
 
   grade(student, subject) {
-    console.log(`${student.name} receives a perfect score on ${this.subject}.`)
+    console.log(`${student.name} receives a perfect score on ${subject}.`)
   }
 }
 
+const keiran = new Instructor({
+  name: 'Keiran',
+  age: undefined,
+  location: 'Canada',
+  specialty: 'JavaScript Classes',
+  favLanguage: 'JavaScript',
+  catchPhrase: 'Once you go to sleep and wake up, it will all make sense.'
+});
+
+keiran.demo(keiran.specialty);
+
+const martha = new Instructor({
+  name: 'Martha',
+  age: 27,
+  location: 'Texas',
+  specialty: 'Python',
+  favLanguage: 'Python',
+  catchPhrase: 'Code first, ask questions later.'
+});
+
+martha.speak();
+
+const josh = new Instructor({
+  name: 'Josh',
+  age: 34,
+  location: 'California',
+  specialty: 'SASS',
+  favLanguage: 'CSS',
+  catchPhrase: 'Make it look good too.'
+});
+
+
+
+//STUDENT class extends PERSON
 class Student extends Person {
   constructor(props) {
     super(props);
@@ -38,9 +76,9 @@ class Student extends Person {
   }
 
   listsSubjects() {
-    console.log(this.favSubjects) // maybe replace with higher order function
+    this.favSubjects.map(subject => console.log(subject))
   }
-
+  
   PRAssignment(subject) {
     console.log(`${this.name} has submitted a PR for ${subject}.`)
   }
@@ -50,6 +88,33 @@ class Student extends Person {
   }
 }
 
+const clif = new Student({
+  name: 'Clif',
+  age: 29,
+  location: 'Austin, TX',
+  previousBackground: 'Designer',
+  className: 'WEBPT8',
+  favSubjects: ['CSS', 'JavaScript', 'React', 'Responsive Web Design']
+})
+
+clif.speak();
+clif.listsSubjects();
+
+josh.grade(clif, clif.favSubjects[2]); //wishful thinking 😅
+
+const nick = new Student({
+  name: 'Nick',
+  age: 26,
+  location: 'Cleveland, OH',
+  previousBackground: 'Podcasts',
+  className: 'WEBPT8',
+  favSubjects: ['JavaScript', 'React', 'MongoDB']
+})
+
+nick.sprintChallenge(nick.favSubjects[0]);
+
+//TEAMLEAD class extends INSTRUCTOR
+
 class TeamLead extends Instructor {
   constructor(props) {
     super(props);
@@ -58,10 +123,36 @@ class TeamLead extends Instructor {
   }
 
   standUp(channel) {
-    console.log(`${this.name} announces to ${channel}, @channel standy times!`)
+    console.log(`${this.name} announces to ${channel}, @channel standup time!`)
   }
 
   debugsCode(student, subject) {
     console.log(`${this.name} debugs ${student.name}'s code on ${subject}`)
   }
 }
+
+const angelo = new TeamLead({
+  name: 'Angelo',
+  age: 29,
+  location: 'San Francisco',
+  specialty: 'React',
+  favLanguage: 'JavaScript',
+  catchPhrase: 'Keep at it.',
+  gradClassName: 'WEB6',
+  favInstructor: 'Josh Knell'
+})
+
+angelo.standUp('#webpt8_angelo');
+
+const derrick = new TeamLead({
+  name: 'Keiran',
+  age: 26,
+  location: 'Kansas',
+  specialty: 'JavaScript Closure',
+  favLanguage: 'JavaScript',
+  catchPhrase: 'Google it.',
+  gradClassName: 'WEB8',
+  favInstructor: 'Keiran Koslowski'
+})
+
+derrick.debugsCode(nick, derrick.specialty);
