@@ -5,12 +5,26 @@
 class Person {
   constructor(props) {
     this.name = props.name,
+    this.lastName = props.lastName,
     this.age = props.age,
     this.location = props.location
   }
 
   speak() {
     console.log(`Hello my name is ${this.name}, I am from ${this.location}.`)
+  }
+
+  tallyScore() {
+    console.log(`Initial Score: ${this.grade}`);
+    let adder = Math.floor(Math.random() * 20); //store number between 0-20 in a variable called "adder"
+    console.log(`Points added: ${adder}`); // log the variable "adder"
+    let finalScore = this.grade + adder; // store "finalScore", consisting of the Initial Score plus the "adder" value
+    if(finalScore > 100) { // if the sum is over 100, make the sum equal to 100
+      finalScore = 100;
+      console.log(`${this.name}'s final score is a perfect ${finalScore}.`)
+    } else {
+      console.log(`${this.name}'s final score is ${finalScore}.`)
+    }
   }
 }
 
@@ -30,10 +44,6 @@ class Instructor extends Person {
 
   grade(student, subject) {
     console.log(`${student.name} receives a perfect score on ${subject}.`)
-  }
-
-  tallyScore(score) {
-    return score + (Math.random() * 100) 
   }
 }
 
@@ -77,7 +87,7 @@ class Student extends Person {
     this.previousBackground = props.previousBackground,
     this.className = props.className,
     this.favSubjects = props.favSubjects,
-    this.grade = props.grade
+    this.grade = (Math.floor(Math.random() * 50)) + 50
   }
 
   listsSubjects() {
@@ -92,35 +102,42 @@ class Student extends Person {
     console.log(`${this.name} has begun sprint challenge on ${subject}.`)
   }
 
-  graduate(grade) {
-    if(grade >= 70) {
-      console.log(`${this.name} is ready to graduate!`)
+  graduate() {
+    console.log(`••••••••••   BEGIN STUDENT ASSESSMENT   ••••••••••`)
+    if(this.tallyScore() >= 70) { // calls the tallyScore method from the Person prototype, which Student extends
+      console.log(`${this.name} ${this.lastName} is ready to graduate!`)
     } else {
-      console.log(`${this.name} needs more practice with the material`);
-      // tallyScore(Math.floor(Math.random() * 100))
+      console.log(`${this.name} ${this.lastName} needs more practice with the material.`);
+      if(this.tallyScore() <= 70) { // this will run adder function within the tallyScore method a second time to attempt to get above 70
+        console.log(`${this.name} ${this.lastName} REALLY needs help.`)
+      } else {
+        console.log(`${this.name} ${this.lastName} is ready to graduate!`)
+      }
     }
+    console.log(`--------------------------------------------------`)
   }
 }
 
 const clif = new Student({
   name: 'Clif',
+  lastName: 'Hodges',
   age: 29,
   location: 'Austin, TX',
   previousBackground: 'Designer',
   className: 'WEBPT8',
   favSubjects: ['CSS', 'JavaScript', 'React', 'Responsive Web Design'],
-  grade: Math.floor(Math.random() * 100)
+  grade: this.finalScore
 })
 
-console.log(clif.graduate());
-console.log(clif.grade);
-// clif.speak();
-// clif.listsSubjects();
 
-// josh.grade(clif, clif.favSubjects[2]); //wishful thinking 😅
+clif.speak();
+clif.listsSubjects();
+
+josh.grade(clif, clif.favSubjects[2]); //wishful thinking 😅
 
 const nick = new Student({
   name: 'Nick',
+  lastName: 'Durbin',
   age: 26,
   location: 'Cleveland, OH',
   previousBackground: 'Podcasts',
@@ -128,7 +145,10 @@ const nick = new Student({
   favSubjects: ['JavaScript', 'React', 'MongoDB']
 })
 
-// nick.sprintChallenge(nick.favSubjects[0]);
+clif.graduate(); // calls graduate method from the Student prototype
+nick.graduate();
+
+nick.sprintChallenge(nick.favSubjects[0]);
 
 //TEAMLEAD class extends INSTRUCTOR
 
@@ -159,7 +179,7 @@ const angelo = new TeamLead({
   favInstructor: 'Josh Knell'
 })
 
-// angelo.standUp('#webpt8_angelo');
+angelo.standUp('#webpt8_angelo');
 
 const derrick = new TeamLead({
   name: 'Keiran',
@@ -172,4 +192,4 @@ const derrick = new TeamLead({
   favInstructor: 'Keiran Koslowski'
 })
 
-// derrick.debugsCode(nick, derrick.specialty);
+derrick.debugsCode(nick, derrick.specialty);
